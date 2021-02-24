@@ -3,7 +3,7 @@ package controller
 // This will contain all the helper functions for the controllers
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/yuin/gopher-lua"
 )
 
@@ -19,18 +19,7 @@ func Loader(L *lua.LState) int {
 }
 
 var exports = map[string]lua.LGFunction{
-	"route": route,
-}
-
-// c.route(uri,forceHttps)
-func route(L *lua.LState) int {
-	rt := L.ToString(1)
-	fs := L.ToBool(2)
-	if fs { // correct
-		fmt.Println(rt)
-	}
-
-	return 1
+	"controller": controller,
 }
 
 func controller(L *lua.LState) int {
