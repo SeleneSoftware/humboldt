@@ -1,29 +1,29 @@
-# README #
+# Humboldt Web Framework #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Humboldt is a framework written in Go using Lua files to build web applications.
 
-### What is this repository for? ###
+### What is this framework for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* People who want to build a more interesting web application
+* v0.0.0
+* [Learn Lua in Fifteen Minutes](http://tylerneylon.com/a/learn-lua/)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Just run and let wild.  To start a new application, run the tool with the option --new={name of project}.  This will create the skeleton directory and get you started.
+* Configuration is handled in Lua files, just open the Config
+* Dependencies - So far none.
+* Database configuration - Working on this
+* How to run tests - Tests?  You think my ADD brain will let me write proper tests?
+* Deployment instructions - In the root directory of your project, just run humboldt and a server will open.
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
+* Writing tests - We need these like badly
+* Code review - This code no doubt sucks.  Tell me how.
 * Other guidelines
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Jason Marshall <JasonMarshallSelene@gmail.com>
+* I want somewhere to have a community discussion, maybe Discord?  Let me actually get this going and find some volunteers to help with this.
