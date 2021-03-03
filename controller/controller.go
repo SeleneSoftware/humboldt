@@ -20,6 +20,7 @@ func Loader(L *lua.LState) int {
 
 var exports = map[string]lua.LGFunction{
 	"controller": controller,
+	"template":   template,
 }
 
 func controller(L *lua.LState) int {
@@ -27,4 +28,8 @@ func controller(L *lua.LState) int {
 	ln := lua.LNumber(i * i) // make calculation and cast to LNumber
 	L.Push(ln)               // Push it to the stack
 	return 1                 // Notify that we pushed one value to the stack
+}
+
+func template(L *lua.LState) int {
+	return 1
 }

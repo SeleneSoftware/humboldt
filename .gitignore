@@ -16,3 +16,6 @@ humboldt
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+#
+# If someone can tell me why my global gitignore isn't reading these files, I'll be happy
+*.swp
