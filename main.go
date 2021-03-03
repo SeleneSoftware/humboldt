@@ -4,15 +4,23 @@ import (
 	"bitbucket.org/selenesoftware/humboldt/controller"
 	"bitbucket.org/selenesoftware/humboldt/routetable"
 	"bitbucket.org/selenesoftware/humboldt/template"
+	// "context"
 	"fmt"
 	"github.com/radovskyb/watcher"
 	"github.com/yuin/gopher-lua"
 	"log"
 	"regexp"
+	"sync"
 	"time"
 )
 
 func main() {
+
+	httpServerExitDone := &sync.WaitGroup{}
+
+	httpServerExitDone.Add(1)
+	startHttpServer(httpServerExitDone)
+
 	L := lua.NewState()
 	defer L.Close()
 
@@ -26,6 +34,8 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	w.FilterOps(watcher.Create)
+
 	// Only files that match the regular expression during file listings
 	// will be watched.
 	r := regexp.MustCompile("^Routing.lua$")
@@ -36,9 +46,18 @@ func main() {
 			select {
 			case event := <-w.Event:
 				fmt.Println(event)
+				// if err := srv.Shutdown(context.TODO()); err != nil {
+				// 	panic(err)
+				// }
+
 				if err := L.DoFile("Config/Routing.lua"); err != nil {
 					panic(err)
 				}
+
+				// httpServerExitDone = &sync.WaitGroup{}
+				//
+				// httpServerExitDone.Add(1)
+				// srv = startHttpServer(httpServerExitDone)
 			case err := <-w.Error:
 				log.Fatalln(err)
 			case <-w.Closed:
@@ -56,9 +75,11 @@ func main() {
 		w.Wait()
 		w.TriggerEvent(watcher.Write, nil)
 	}()
+	// fmt.Println(srv.Handler)
 	if err := w.Start(time.Millisecond * 100); err != nil {
 		log.Fatalln(err)
 	}
+
 	// if err := L.DoFile("test.lua"); err != nil {
 	// 	panic(err)
 	// }
