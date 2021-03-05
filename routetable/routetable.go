@@ -26,8 +26,10 @@ type Route struct {
 var RouteTable = map[string]Route{}
 
 func loadRoute(r string) Route {
+	r = "/" + r
 	for _, v := range RouteTable {
 		if v.Route == r {
+			fmt.Println(r)
 			return v
 		}
 	}
@@ -35,9 +37,6 @@ func loadRoute(r string) Route {
 }
 
 func Loader(L *lua.LState) int {
-
-	// create the route table
-	// RouteTable = map[string]Route{}
 	// register functions to the table
 	mod := L.SetFuncs(L.NewTable(), exports)
 	// register other stuff
@@ -50,29 +49,31 @@ func Loader(L *lua.LState) int {
 }
 
 func route(L *lua.LState) int {
-	r := Route{
+	rt := Route{
 		Name:        L.ToString(1),
 		Route:       L.ToString(2),
 		Method:      L.ToString(3),
 		ForceSecure: L.ToBool(4),
 	}
 
-	if RouteTable[r.Name].Name == "" {
-		fmt.Println(r.Route)
-		RouteTable[r.Name] = r
-		http.HandleFunc(r.Route, handler)
+	if RouteTable[rt.Name].Name == "" {
+		fmt.Println(rt.Route + " Added")
+		RouteTable[rt.Name] = rt
+		http.HandleFunc(rt.Route, func(w http.ResponseWriter, r *http.Request) {
+			if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
+				panic(err)
+			}
+		})
 	}
 
 	return 1
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	// title := r.URL.Path[len("/view/"):]
-	// p, err := loadRoute(title)
-	// if err != nil {
-	// 	http.Redirect(w, r, "/edit/"+title, http.StatusFound)
-	// 	return
-	// }
-	rt := loadRoute(r.URL.Path[1:])
-	fmt.Fprintf(w, "Hi there, I love %s!", rt.Name)
-}
+// func handler(w http.ResponseWriter, r *http.Request) {
+// 	// fmt.Println("Fuck this shit", r.URL.Path[1:])
+// 	rt := loadRoute(r.URL.Path[1:])
+// 	fmt.Println(rt)
+// 	if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
+// 		panic(err)
+// 	}
+// }
