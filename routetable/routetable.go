@@ -1,10 +1,11 @@
 package routetable
 
 import (
+	"bitbucket.org/selenesoftware/humboldt/controller"
 	"fmt"
 	"github.com/yuin/gopher-lua"
-	// "log"
 	"net/http"
+	// "sync"
 )
 
 var exports = map[string]lua.LGFunction{
@@ -61,19 +62,14 @@ func route(L *lua.LState) int {
 		RouteTable[rt.Name] = rt
 		http.HandleFunc(rt.Route, func(w http.ResponseWriter, r *http.Request) {
 			if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
+				// I would rather this throw a 502 or something of that sort.
+				// But for now, this will do.
+				// Don't judge me, this is still heavy development
 				panic(err)
 			}
+			responseHeaders := controller.RetrieveHeader()
 		})
 	}
 
 	return 1
 }
-
-// func handler(w http.ResponseWriter, r *http.Request) {
-// 	// fmt.Println("Fuck this shit", r.URL.Path[1:])
-// 	rt := loadRoute(r.URL.Path[1:])
-// 	fmt.Println(rt)
-// 	if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
-// 		panic(err)
-// 	}
-// }

@@ -7,6 +7,8 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
+var M = map[string]string{}
+
 func Loader(L *lua.LState) int {
 	// register functions to the table
 	mod := L.SetFuncs(L.NewTable(), exports)
@@ -19,8 +21,8 @@ func Loader(L *lua.LState) int {
 }
 
 var exports = map[string]lua.LGFunction{
-	"request": request,
-	"header":  header,
+	"request":   request,
+	"setheader": setheader,
 }
 
 func request(L *lua.LState) int {
@@ -30,6 +32,13 @@ func request(L *lua.LState) int {
 	return 1                 // Notify that we pushed one value to the stack
 }
 
-func header(L *lua.LState) int {
+func setheader(L *lua.LState) int {
+	k := L.ToString(1)
+	v := L.ToString(2)
+	M[k] = v
 	return 1
+}
+
+func RetrieveHeader() map[string]string {
+	return M
 }

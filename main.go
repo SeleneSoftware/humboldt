@@ -75,12 +75,8 @@ func main() {
 		w.Wait()
 		w.TriggerEvent(watcher.Write, nil)
 	}()
-	// fmt.Println(srv.Handler)
+
 	if err := w.Start(time.Millisecond * 100); err != nil {
 		log.Fatalln(err)
 	}
-
-	// if err := L.DoFile("test.lua"); err != nil {
-	// 	panic(err)
-	// }
 }
