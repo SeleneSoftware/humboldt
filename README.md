@@ -8,6 +8,9 @@ Humboldt is a framework written in Go using Lua files to build web applications.
 * v0.0.0
 * [Learn Lua in Fifteen Minutes](http://tylerneylon.com/a/learn-lua/)
 
+### Why Humboldt as a Name? ###
+This framework is named after a penguin.  A rather amazing penguin species called Humboldt Penguins.  These birds live in costal regions of southern parts of South America, like Peru.  To learn more, the St. Louis Zoo in St. Louis MS, USA, has an amazing exhibit of the wonderful birds.  [Check them out today](https://www.stlzoo.org/animals/abouttheanimals/birds/penguins/humboldtpenguin)
+
 ### How do I get set up? ###
 
 * Just run and let wild.  To start a new application, run the tool with the option --new={name of project}.  This will create the skeleton directory and get you started.
