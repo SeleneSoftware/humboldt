@@ -18,11 +18,28 @@ func Loader(L *lua.LState) int {
 
 var exports = map[string]lua.LGFunction{
 	"variable": variable,
+	"setFile":  setFile,
 }
 
+var tmpVar = map[string]string{}
+
+var fn string
+
 func variable(L *lua.LState) int {
-	// k := L.ToString(1)
-	// v := L.ToString(2)
+	k := L.ToString(1)
+	v := L.ToString(2)
+
+	tmpVar[k] = v
 
 	return 1
+}
+
+func setFile(L *lua.LState) int {
+	fn = L.ToString(1)
+
+	return 1
+}
+
+func RetrieveTemplate() string {
+	return "Views/" + fn + ".tpl"
 }

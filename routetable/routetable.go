@@ -2,10 +2,11 @@ package routetable
 
 import (
 	"bitbucket.org/selenesoftware/humboldt/controller"
+	"bitbucket.org/selenesoftware/humboldt/template"
 	"fmt"
+	pongo2 "github.com/flosch/pongo2/v4"
 	"github.com/yuin/gopher-lua"
 	"net/http"
-	// "sync"
 )
 
 var exports = map[string]lua.LGFunction{
@@ -68,6 +69,14 @@ func route(L *lua.LState) int {
 				panic(err)
 			}
 			responseHeaders := controller.RetrieveHeader()
+			for k, v := range responseHeaders {
+				w.Header().Set(k, v)
+			}
+			tpl, _ := pongo2.FromFile(template.RetrieveTemplate())
+			err := tpl.ExecuteWriter(pongo2.Context{"query": r.FormValue("query")}, w)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
 		})
 	}
 
