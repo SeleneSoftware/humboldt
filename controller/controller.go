@@ -7,7 +7,7 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-var M = map[string]string{}
+var h = map[string]string{}
 
 func Loader(L *lua.LState) int {
 	// register functions to the table
@@ -32,13 +32,17 @@ func request(L *lua.LState) int {
 	return 1                 // Notify that we pushed one value to the stack
 }
 
+// Set a header for the response in the header
 func setheader(L *lua.LState) int {
 	k := L.ToString(1)
 	v := L.ToString(2)
-	M[k] = v
+	h[k] = v
 	return 1
 }
 
+// Functions to move data to other parts of the server
+
+// All the header variables
 func RetrieveHeader() map[string]string {
-	return M
+	return h
 }

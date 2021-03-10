@@ -27,6 +27,7 @@ type Route struct {
 
 var RouteTable = map[string]Route{}
 
+// Not sure if this is still needed, but I'll leave it here JUST IN CASE
 func loadRoute(r string) Route {
 	r = "/" + r
 	for _, v := range RouteTable {
@@ -59,8 +60,14 @@ func route(L *lua.LState) int {
 	}
 
 	if RouteTable[rt.Name].Name == "" {
+		// Everytime the route Lua file is changed,
+		// this is run to make sure it is added to the server
 		fmt.Println(rt.Route + " Added")
 		RouteTable[rt.Name] = rt
+
+		// The most important part of the system,
+		// this is where each route runs the Lua
+		// controller and sets up the output.
 		http.HandleFunc(rt.Route, func(w http.ResponseWriter, r *http.Request) {
 			if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
 				// I would rather this throw a 502 or something of that sort.
@@ -68,12 +75,16 @@ func route(L *lua.LState) int {
 				// Don't judge me, this is still heavy development
 				panic(err)
 			}
+
+			// Set the headers from the Lua files
 			responseHeaders := controller.RetrieveHeader()
 			for k, v := range responseHeaders {
 				w.Header().Set(k, v)
 			}
+
+			// Template compilation and rendering
 			tpl, _ := pongo2.FromFile(template.RetrieveTemplate())
-			err := tpl.ExecuteWriter(pongo2.Context{"query": r.FormValue("query")}, w)
+			err := tpl.ExecuteWriter(template.RetrieveVariables(), w)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
