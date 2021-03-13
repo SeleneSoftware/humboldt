@@ -69,6 +69,7 @@ func route(L *lua.LState) int {
 		// this is where each route runs the Lua
 		// controller and sets up the output.
 		http.HandleFunc(rt.Route, func(w http.ResponseWriter, r *http.Request) {
+			controller.SetRequest(r)
 			if err := L.DoFile("Controller/" + rt.Name + ".lua"); err != nil {
 				// I would rather this throw a 502 or something of that sort.
 				// But for now, this will do.

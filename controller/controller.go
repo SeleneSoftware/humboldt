@@ -3,8 +3,10 @@ package controller
 // This will contain all the helper functions for the controllers
 
 import (
+	// "encoding/json"
 	// "fmt"
 	"github.com/yuin/gopher-lua"
+	"net/http"
 )
 
 var h = map[string]string{}
@@ -21,15 +23,22 @@ func Loader(L *lua.LState) int {
 }
 
 var exports = map[string]lua.LGFunction{
-	"request":   request,
+	// "request":   request,
 	"setheader": setheader,
+	"getheader": getheader,
 }
 
-func request(L *lua.LState) int {
-	i := L.ToInt(1)          // get first (1) function argument and convert to int
-	ln := lua.LNumber(i * i) // make calculation and cast to LNumber
-	L.Push(ln)               // Push it to the stack
-	return 1                 // Notify that we pushed one value to the stack
+func getheader(L *lua.LState) int {
+	v := L.ToString(1)
+	// In time, I will have this by default push the whole map
+	// into a table, but I just don't feel like it right now
+	// if v == "" {
+	// 	L.Push(req.Header)
+	// 	return 1
+	// }
+	// fmt.Println(v)
+	L.Push(lua.LString(req.Header.Get(v)))
+	return 1 // Notify that we pushed one value to the stack
 }
 
 // Set a header for the response in the header
@@ -41,6 +50,12 @@ func setheader(L *lua.LState) int {
 }
 
 // Functions to move data to other parts of the server
+
+var req *http.Request
+
+func SetRequest(r *http.Request) {
+	req = r
+}
 
 // All the header variables
 func RetrieveHeader() map[string]string {
