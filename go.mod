@@ -14,6 +14,8 @@ require (
 
 replace bitbucket.org/selenesoftware/humboldt/controller v0.0.0 => ./controller
 
+replace bitbucket.org/selenesoftware/humboldt/forms v0.0.0 => ./forms
+
 replace bitbucket.org/selenesoftware/humboldt/routetable v0.0.0 => ./routetable
 
 replace bitbucket.org/selenesoftware/humboldt/template v0.0.0 => ./template
