@@ -82,12 +82,6 @@ func route(L *lua.LState) int {
 				// I would rather this throw a 502 or something of that sort.
 				// But for now, this will do.
 				// Don't judge me, this is still heavy development
-
-				// Check to see if there is a static file before throwing everything away
-				// if Exists("Public" + rt.Route) {
-				// 	http.ServeFile(w, r, "public"+rt.Route)
-				// 	return
-				// }
 				panic(err)
 			}
 
@@ -96,13 +90,15 @@ func route(L *lua.LState) int {
 			for k, v := range responseHeaders {
 				w.Header().Set(k, v)
 			}
-
+			fmt.Println(template.RetrieveVariables)
 			// Template compilation and rendering
 			tpl, _ := pongo2.FromFile(template.RetrieveTemplate())
 			err := tpl.ExecuteWriter(template.RetrieveVariables(), w)
 			if err != nil {
+				fmt.Println(err)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
+			fmt.Println(tpl)
 		})
 	}
 
