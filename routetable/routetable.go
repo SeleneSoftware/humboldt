@@ -7,6 +7,8 @@ import (
 	pongo2 "github.com/flosch/pongo2/v4"
 	"github.com/yuin/gopher-lua"
 	"net/http"
+	"os"
+	"strings"
 )
 
 var exports = map[string]lua.LGFunction{
@@ -26,6 +28,12 @@ type Route struct {
 }
 
 var RouteTable = map[string]Route{}
+
+func init() {
+	fmt.Println("Initalizing the RouteTable")
+	fileServer := http.FileServer(FileSystem{http.Dir("public")})
+	http.Handle("/public/", http.StripPrefix(strings.TrimRight("/public/", "/"), fileServer))
+}
 
 // Not sure if this is still needed, but I'll leave it here JUST IN CASE
 func loadRoute(r string) Route {
@@ -74,6 +82,12 @@ func route(L *lua.LState) int {
 				// I would rather this throw a 502 or something of that sort.
 				// But for now, this will do.
 				// Don't judge me, this is still heavy development
+
+				// Check to see if there is a static file before throwing everything away
+				// if Exists("Public" + rt.Route) {
+				// 	http.ServeFile(w, r, "public"+rt.Route)
+				// 	return
+				// }
 				panic(err)
 			}
 
@@ -93,4 +107,13 @@ func route(L *lua.LState) int {
 	}
 
 	return 1
+}
+
+func Exists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
 }
