@@ -7,6 +7,7 @@ import (
 	// "fmt"
 	"github.com/yuin/gopher-lua"
 	"net/http"
+	// "github.com/yuin/gluamapper"
 )
 
 var h = map[string]string{}
@@ -24,8 +25,9 @@ func Loader(L *lua.LState) int {
 
 var exports = map[string]lua.LGFunction{
 	// "request":   request,
-	"setheader": setheader,
-	"getheader": getheader,
+	"setheader":        setheader,
+	"getheader":        getheader,
+	"getrequestheader": GetRequestHeaders,
 }
 
 func getheader(L *lua.LState) int {
@@ -48,6 +50,14 @@ func setheader(L *lua.LState) int {
 	h[k] = v
 	return 1
 }
+
+// func getrequest(L *lua.LState) int {
+// 	L.Push(lua.LTable(req))
+// 	// if err := gluamapper.Map(f, &form); err != nil {
+// 	// 	panic(err)
+// 	// }
+// 	return 1
+// }
 
 // Functions to move data to other parts of the server
 

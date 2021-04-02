@@ -1,5 +1,6 @@
 local c = require("controller")
 local t = require("template")
+local f = require("forms")
 
 c.setheader("jason","marshall")
 
@@ -9,22 +10,31 @@ t.variable("title", "Humboldt Web Server Framework")
 
 print(c.getheader("Accept"))
 
-f1 = {a = 1, b = 2}  -- Represents the fraction a/b.
-f2 = {a = 2, b = 3}
+-- p = form.new("Steeve")
+-- print(p:name()) -- "Steeve"
+-- element = form.element("Jason")
+-- g = form.new("Alice")
+-- print(g) -- "Alice"
 
--- This would fail:
--- s = f1 + f2
+emailField = {
+    Name = "email",
+    Type = "text",
+    Value = "",
+}
+form = {
+    name = "Jason",
+    elements = {
+        emailField,
+        {
+            Name = "first",
+            Type = "text",
+            Value = "",
+        }
+    }
+}
 
-metafraction = {}
-function metafraction.__add(f1, f2)
-  sum = {}
-  sum.b = f1.b + f2.b
-  sum.a = f1.a * f2.b + f2.a * f1.b
-  return sum
-end
 
-setmetatable(f1, metafraction)
-setmetatable(f2, metafraction)
 
-s = f1 + f2
-print(s.b)
+f.new(form)
+
+-- getrequestheader("Jason")

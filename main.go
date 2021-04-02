@@ -2,6 +2,7 @@ package main
 
 import (
 	"bitbucket.org/selenesoftware/humboldt/controller"
+	"bitbucket.org/selenesoftware/humboldt/forms"
 	"bitbucket.org/selenesoftware/humboldt/routetable"
 	"bitbucket.org/selenesoftware/humboldt/template"
 	// "context"
@@ -27,6 +28,7 @@ func main() {
 	L.PreloadModule("controller", controller.Loader)
 	L.PreloadModule("template", template.Loader)
 	L.PreloadModule("route", routetable.Loader)
+	L.PreloadModule("forms", forms.Loader)
 
 	w := watcher.New()
 	w.FilterOps(watcher.Rename, watcher.Move, watcher.Write)

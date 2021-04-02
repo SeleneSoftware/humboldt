@@ -1,0 +1,83 @@
+package forms
+
+// This will contain all the helper functions for the controllers
+
+import (
+	// "encoding/json"
+	// "fmt"
+	"github.com/yuin/gopher-lua"
+)
+
+type Form struct {
+	Name string
+}
+
+const luaFormTypeName = "form"
+
+// Registers my person type to given L.
+// func registerFormType(L *lua.LState) {
+func Loader(L *lua.LState) int {
+	mt := L.NewTypeMetatable(luaFormTypeName)
+	L.SetGlobal("form", mt)
+	// static attributes
+	L.SetField(mt, "new", L.NewFunction(newForm))
+	// methods
+	L.SetField(mt, "__index", L.SetFuncs(L.NewTable(), formMethods))
+	L.Push(mt)
+	return 1
+}
+
+// Constructor
+func newForm(L *lua.LState) int {
+	form := &Form{L.CheckString(1)}
+	ud := L.NewUserData()
+	ud.Value = form
+	L.SetMetatable(ud, L.GetTypeMetatable(luaFormTypeName))
+	L.Push(ud)
+	return 1
+}
+
+func checkForm(L *lua.LState) *Form {
+	ud := L.CheckUserData(1)
+	if v, ok := ud.Value.(*Form); ok {
+		return v
+	}
+	L.ArgError(1, "form expected")
+	return nil
+}
+
+// Getter and setter for the Person#Name
+func formGetSetName(L *lua.LState) int {
+	f := checkForm(L)
+	if L.GetTop() == 2 {
+		f.Name = L.CheckString(2)
+		return 0
+	}
+	L.Push(lua.LString(f.Name))
+	return 1
+}
+
+var formMethods = map[string]lua.LGFunction{
+	"formbuilder": formbuilder,
+}
+
+// func Loader(L *lua.LState) int {
+// 	// register functions to the table
+// 	mod := L.SetFuncs(L.NewTable(), exports)
+// 	// register other stuff
+// 	L.SetField(mod, "name", lua.LString("value"))
+//
+// 	// returns the module
+// 	L.Push(mod)
+// 	return 1
+// }
+
+// var exports = map[string]lua.LGFunction{
+// 	// "request":   request,
+// 	"formbuilder": formbuilder,
+// 	"renderform":  renderform,
+// }
+//
+func formbuilder(L *lua.LState) int {
+	return 1
+}
