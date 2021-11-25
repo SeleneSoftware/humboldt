@@ -55,7 +55,8 @@
 			<div class="body">
 				<div>
 					<h1>WINNING</h1>
-					<p>What’s more, they’re absolutely free! You can do a lot with them. You can modify them.</p>
+                                        {% formstart form %}
+					<p>{% lorem %}</p>
 					<a href="blog.html" class="more">Read More</a>
 				</div>
 			</div>

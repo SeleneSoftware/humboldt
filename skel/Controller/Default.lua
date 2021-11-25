@@ -33,8 +33,8 @@ form = {
     }
 }
 
+t.variable("form",form)
 
-
-f.new(form)
+-- t.variable("form",f.render(form))
 
 -- getrequestheader("Jason")
