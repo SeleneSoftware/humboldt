@@ -32,7 +32,7 @@ type Session interface {
 	SessionID() string
 }
 
-// var globalSessions *session.Manager
+// var gS *session.Manager
 
 var provides = make(map[string]Provider)
 
@@ -84,7 +84,7 @@ func (manager *Manager) SessionStart(w http.ResponseWriter, r *http.Request) (se
 	return
 }
 
-// func count(w http.ResponseWriter, r *http.Request) {
+// func (manager *Manager) count(w http.ResponseWriter, r *http.Request) {
 // 	sess := globalSessions.SessionStart(w, r)
 // 	createtime := sess.Get("createtime")
 // 	if createtime == nil {

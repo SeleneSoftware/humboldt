@@ -1,10 +1,11 @@
-package memory
+package providers
 
 import (
+	"bitbucket.org/selenesoftware/humboldt/sessions"
 	"container/list"
-	"session"
 	"sync"
 	"time"
+	// "session"
 )
 
 var pder = &Provider{list: list.New()}
@@ -67,13 +68,13 @@ func (pder *Provider) SessionRead(sid string) (session.Session, error) {
 	return nil, nil
 }
 
-func (pder *Provider) SessionDestroy(sid string) error {
+func (pder *Provider) SessionDestroy(sid string) (session.Session, error) {
 	if element, ok := pder.sessions[sid]; ok {
 		delete(pder.sessions, sid)
 		pder.list.Remove(element)
-		return nil
+		return nil, nil
 	}
-	return nil
+	return nil, nil
 }
 
 func (pder *Provider) SessionGC(maxlifetime int64) {
