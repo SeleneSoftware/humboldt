@@ -1,5 +1,5 @@
-module bitbucket.org/SeleneSoftware/humboldt/sessions/providers
+module github.com/SeleneSoftware/humboldt/sessions/providers
 
 go 1.15
 
-replace bitbucket.org/SeleneSoftware/humboldt/sessions v0.0.0 => ./sessions
+replace github.com/SeleneSoftware/humboldt/sessions v0.0.0 => ./sessions
