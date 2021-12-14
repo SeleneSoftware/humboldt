@@ -1,8 +1,8 @@
 package providers
 
 import (
-	"bitbucket.org/selenesoftware/humboldt/sessions"
 	"container/list"
+	"github.com/selenesoftware/humboldt/sessions"
 	"sync"
 	"time"
 	// "session"

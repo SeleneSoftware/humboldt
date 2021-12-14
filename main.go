@@ -1,9 +1,9 @@
 package main
 
 import (
-	"bitbucket.org/selenesoftware/humboldt/controller"
-	"bitbucket.org/selenesoftware/humboldt/routetable"
-	"bitbucket.org/selenesoftware/humboldt/template"
+	"github.com/selenesoftware/humboldt/controller"
+	"github.com/selenesoftware/humboldt/routetable"
+	"github.com/selenesoftware/humboldt/template"
 	// "context"
 	"fmt"
 	"github.com/radovskyb/watcher"

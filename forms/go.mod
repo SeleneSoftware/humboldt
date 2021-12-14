@@ -1,3 +1,3 @@
-module bitbucket.org/selenesoftware/humboldt/forms
+module github.com/selenesoftware/humboldt/forms
 
 go 1.15
