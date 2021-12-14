@@ -2,7 +2,7 @@ package providers
 
 import (
 	"container/list"
-	"github.com/selenesoftware/humboldt/sessions"
+	"github.com/SeleneSoftware/humboldt/sessions"
 	"sync"
 	"time"
 	// "session"

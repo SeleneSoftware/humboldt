@@ -1,3 +1,3 @@
-module bitbucket.org/selenesoftware/humboldt/template
+module bitbucket.org/SeleneSoftware/humboldt/template
 
 go 1.15

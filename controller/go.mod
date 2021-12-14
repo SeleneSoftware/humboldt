@@ -1,4 +1,4 @@
-module github.com/selenesoftware/humboldt/controller
+module github.com/SeleneSoftware/humboldt/controller
 
 go 1.15
 

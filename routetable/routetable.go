@@ -3,8 +3,8 @@ package routetable
 import (
 	"fmt"
 	pongo2 "github.com/flosch/pongo2/v4"
-	"github.com/selenesoftware/humboldt/controller"
-	"github.com/selenesoftware/humboldt/template"
+	"github.com/SeleneSoftware/humboldt/controller"
+	"github.com/SeleneSoftware/humboldt/template"
 	"github.com/yuin/gopher-lua"
 	"net/http"
 	"os"
