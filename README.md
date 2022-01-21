@@ -18,16 +18,17 @@ This framework is named after a penguin.  A rather amazing penguin species calle
 
 ### How do I get set up? ###
 
-* Just run and let wild.  To start a new application, run the tool with the option --new={name of project}.  This will create the skeleton directory and get you started.
+* Just run and let wild.  ~~To start a new application, run the tool with the option --new={name of project}.  This will create the skeleton directory and get you started.~~ This option hasn't been implemented yet.
 * Configuration is handled in Lua files, just open the Config
 * Dependencies - So far none.
 * Database configuration - Working on this
-* How to run tests - Tests?  You think my ADD brain will let me write proper tests?
+* How to run tests - Tests?  You think my ADHD brain will let me write proper tests?
 * Deployment instructions - In the root directory of your project, just run humboldt and a server will open.
 
-### Contribution guidelines ###
+### How Can I Contribute ###
 
-* Writing tests - We need these like badly
+* Issues - There aren't many issues in the official GitHub issue tracker, so that is a rather good start.  If people could make issues so others can work on them, that would be amazing.
+* Writing tests - We need these, like, badly
 * Code review - This code no doubt sucks.  Tell me how.
 * Other guidelines
 
